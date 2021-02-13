@@ -1,11 +1,14 @@
 from tkinter import *
 from tkinter.ttk import *
+import tkinter.filedialog as FD
 
 
-# Function
+
+
 def clicked():
     full_name_val = txt_full_name.get()
     print('Clicked! This is your text:', full_name_val)
+
 
 
 # Home page - the main page of our program, from this page the user can navigate between the other pages
@@ -13,6 +16,9 @@ home_page = Tk()
 home_page.title("Home Page")
 home_page.minsize(300, 300)
 home_page.configure(bg='white')
+
+# TODO : Create menu and functions to navigate between pages
+menubar = Menu(home_page)
 
 # Personal details
 personal_details = Tk()
@@ -26,7 +32,9 @@ main_title_HP = Label(home_page, text='Welcome!\n Here are your options:', font=
 main_title_PD = Label(personal_details, text='Personal Details:\n Please fill in the following details according to the format', font=("Arial Bold", 10))
 
 # TODO: 'Click Here' or actually - 'save' button - will save the data into file (text file?)
-btn1 = Button(personal_details, text='Click Here', command=clicked)
+btn1 = Button(personal_details, text='Save details', command=clicked)
+btn_to_personal_details = Button(home_page, text='Personal Details', command=clicked)
+
 
 # TODO: add 'Back' button in each page
 btn_exit = Button(personal_details, text='Exit', command=exit)
@@ -64,6 +72,8 @@ lbl_age.grid(row=2, column=0)
 txt_age.grid(row=2, column=15)
 
 btn1.grid(row=3, column=0)
+btn_to_personal_details.grid(row=3, column=0)
+
 btn_exit.grid(row=10, column=0)
 
 combo_city.grid(row=4, column=0)
@@ -75,5 +85,5 @@ rad_female.grid(row=6, column=15)
 
 
 home_page.mainloop()
-# personal_details.mainloop()
+personal_details.mainloop()
 
