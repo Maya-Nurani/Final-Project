@@ -42,3 +42,5 @@ rad2.grid(row=6, column=5)
 rad3.grid(row=6, column=15)
 
 root.mainloop()
+
+
