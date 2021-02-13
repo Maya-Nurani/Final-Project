@@ -4,43 +4,76 @@ from tkinter.ttk import *
 
 # Function
 def clicked():
-    full_name_val = txtName.get()
+    full_name_val = txt_full_name.get()
     print('Clicked! This is your text:', full_name_val)
 
 
-root = Tk()
-root.title("main page")
-root.minsize(300, 300)
-root.configure(bg='pink')
+# Home page - the main page of our program, from this page the user can navigate between the other pages
+home_page = Tk()
+home_page.title("Home Page")
+home_page.minsize(300, 300)
+home_page.configure(bg='white')
+
+# Personal details
+personal_details = Tk()
+personal_details.title("Personal Details")
+personal_details.minsize(300, 300)
+personal_details.configure(bg='white')
 
 # creation
-lbl1 = Label(root, text='Welcome', font=("Arial Bold", 14))
-lbl2 = Label(root, text='Full Name:')
-btn1 = Button(root, text='Click Here', command=clicked)
-btn_exit = Button(root, text='Exit', command=exit)
-txtName = Entry(root, width=10)
-combo1 = Combobox(root)
-combo1['values'] = ('none', 1, 2, 3)
-combo1.current(0)       # Set default value
-chk_state = BooleanVar()
-chk_state.set(False)     # Set default state
-chk = Checkbutton(root, text='choose', var=chk_state)
-rad1 = Radiobutton(root, text='First', value=1)
-rad2 = Radiobutton(root, text='Second', value=2)
-rad3 = Radiobutton(root, text='Third', value=3)
+# TODO: change label location and text
+main_title_HP = Label(home_page, text='Welcome!\n Here are your options:', font=("Arial Bold", 14))
+main_title_PD = Label(personal_details, text='Personal Details:\n Please fill in the following details according to the format', font=("Arial Bold", 10))
+
+# TODO: 'Click Here' or actually - 'save' button - will save the data into file (text file?)
+btn1 = Button(personal_details, text='Click Here', command=clicked)
+
+# TODO: add 'Back' button in each page
+btn_exit = Button(personal_details, text='Exit', command=exit)
+
+# Full Name field
+lbl_full_name = Label(personal_details, text='Full Name:')
+txt_full_name = Entry(personal_details, width=10)
+
+# Age (Can be as 'date of birth' and split by Year-Month-Day)
+lbl_age = Label(personal_details, text='Age')
+txt_age = Entry(personal_details, width=5)
+#numeric_age = int(txt_age.get())
+
+# City field
+combo_city = Combobox(personal_details)
+combo_city['values'] = (None, 'Tel-Aviv', 'Jerusalem', 'Ramat-Gan', 'Haifa', 'Yavne')
+combo_city.current(0)  # Set default value
+
+# chk_state = BooleanVar()
+# chk_state.set(False)  # Set default state
+# chk = Checkbutton(personal_details, text='choose', var=chk_state)
+
+# Gender
+lbl_gender = Label(personal_details, text='Gender')
+rad_male = Radiobutton(personal_details, text='Male', value=1)
+rad_female = Radiobutton(personal_details, text='Female', value=2)
+
 
 # pack
-lbl1.grid(row=0, column=0)
-lbl2.grid(row=1, column=0)
-btn1.grid(row=2, column=0)
-btn_exit.grid(row=3, column=0)
-txtName.grid(row=1, column=15)
-combo1.grid(row=4, column=0)
-chk.grid(row=5, column=0)
-rad1.grid(row=6, column=0)
-rad2.grid(row=6, column=5)
-rad3.grid(row=6, column=15)
+main_title_HP.grid(row=0, column=0)
+main_title_PD.grid(row=0, column=0)
+lbl_full_name.grid(row=1, column=0)
+txt_full_name.grid(row=1, column=15)
+lbl_age.grid(row=2, column=0)
+txt_age.grid(row=2, column=15)
 
-root.mainloop()
+btn1.grid(row=3, column=0)
+btn_exit.grid(row=10, column=0)
 
+combo_city.grid(row=4, column=0)
+# chk.grid(row=5, column=0)
+
+lbl_gender.grid(row=6, column=0)
+rad_male.grid(row=6, column=5)
+rad_female.grid(row=6, column=15)
+
+
+home_page.mainloop()
+# personal_details.mainloop()
 
