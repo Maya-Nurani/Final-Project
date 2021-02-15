@@ -35,6 +35,7 @@ btn_to_personal_details = Button(home_page, text='Personal Details', command=cli
 
 # TODO: add 'Back' button in each page
 btn_exit = Button(personal_details, text='Exit', command=exit)
+btn_close = Button(home_page, text="Exit", command=exit)
 
 # Full Name field
 lbl_full_name = Label(personal_details, text='Full Name:')
@@ -72,6 +73,8 @@ btn1.grid(row=3, column=0)
 btn_to_personal_details.grid(row=3, column=0)
 
 btn_exit.grid(row=10, column=0)
+
+btn_close.grid(row=50, column=0)
 
 combo_city.grid(row=4, column=0)
 # chk.grid(row=5, column=0)
