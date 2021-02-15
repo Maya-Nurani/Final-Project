@@ -17,9 +17,6 @@ home_page.title("Home Page")
 home_page.minsize(300, 300)
 home_page.configure(bg='white')
 
-# TODO : Create menu and functions to navigate between pages
-menubar = Menu(home_page)
-
 # Personal details
 personal_details = Tk()
 personal_details.title("Personal Details")
@@ -83,6 +80,13 @@ lbl_gender.grid(row=6, column=0)
 rad_male.grid(row=6, column=5)
 rad_female.grid(row=6, column=15)
 
+# TODO : Make the menu function (it has only labels for now)
+menubar = Menu(home_page)
+home_page.config(menu=menubar)
+menubar.add_command(label="Homepage")
+menubar.add_command(label="Personal Details", command=btn_to_personal_details)
+menubar.add_command(label="Contacts", command=clicked())
+menubar.add_command(label="Contact Locations", command=clicked())
 
 home_page.mainloop()
 personal_details.mainloop()
