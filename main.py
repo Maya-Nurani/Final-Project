@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter.ttk import *
 import tkinter.filedialog as FD
 
+def raise_frame(frame: Frame):
+    frame.tkraise()
 
 def page_open():
     page = Toplevel(personal_details)
@@ -15,26 +17,26 @@ def clicked():
 def setMenu(page):
     # TODO : Make the menu function (it has only labels for now)
     menubar = Menu(page)
-    menubar.add_command(label="Homepage")
-    menubar.add_command(label="Personal Details", command=page_open)
+    menubar.add_command(label="Homepage", command=lambda: raise_frame(home_page))
+    menubar.add_command(label="Personal Details", command=lambda: raise_frame(personal_details))
     menubar.add_command(label="Contacts", command=clicked())
     menubar.add_command(label="Contact Locations", command=clicked())
-    menubar.add_command(label="Close", command=home_page.quit())
+    menubar.add_command(label="Close", command=root.quit())
 
-    home_page.config(menu=menubar)
+    root.config(menu=menubar)
 
-
+root = Tk()
+s = Style()
+s.configure('My.TFrame', background='white')
 # Home page - the main page of our program, from this page the user can navigate between the other pages
-home_page = Tk()
-home_page.title("Home Page")
-home_page.minsize(300, 300)
-home_page.configure(bg='white')
+home_page = Frame(root, width=500, height=500, style='My.TFrame')
+home_page.grid(row=0, column=0)
+#home_page.pack()
+# home_page.title("Home Page")
+root.minsize(300, 300)
 
-# Personal details
-personal_details = Tk()
-personal_details.title("Personal Details")
-personal_details.minsize(300, 300)
-personal_details.configure(bg='white')
+personal_details = Frame(root, width=500, height=500)
+personal_details.grid(row=0, column=0)
 
 # creation
 # TODO: change label location and text
@@ -73,10 +75,11 @@ rad_female = Radiobutton(personal_details, text='Female', value=2)
 
 # TODO: 'Click Here' or actually - 'save' button - will save the data into file (text file?)
 btn1 = Button(personal_details, text='Save details', command=clicked)
-btn_to_personal_details = Button(personal_details, text='Personal Details', command=clicked())
+# btn_to_personal_details = Button(home, text='Personal Details', command=clicked())
 
 # pack
-main_title_HP.grid(row=0, column=0)
+# main_title_HP.grid(row=0, column=0)
+main_title_HP.pack()
 main_title_PD.grid(row=0, column=0)
 lbl_full_name.grid(row=1, column=0)
 txt_full_name.grid(row=1, column=15)
@@ -84,12 +87,12 @@ lbl_age.grid(row=2, column=0)
 txt_age.grid(row=2, column=15)
 
 btn1.grid(row=3, column=0)
-btn_to_personal_details.grid(row=3, column=0)
+# btn_to_personal_details.grid(row=3, column=0)
 
 btn_exit.grid(row=10, column=0)
 
-btn_close.grid(row=50, column=0)
-
+# btn_close.grid(row=50, column=0)
+btn_close.pack()
 combo_city.grid(row=4, column=0)
 # chk.grid(row=5, column=0)
 
@@ -97,7 +100,8 @@ lbl_gender.grid(row=6, column=0)
 rad_male.grid(row=6, column=5)
 rad_female.grid(row=6, column=15)
 
-setMenu(home_page)
+setMenu(root)
 
-home_page.mainloop()
-personal_details.mainloop()
+raise_frame(home_page)
+root.mainloop()
+# personal_details.mainloop()
