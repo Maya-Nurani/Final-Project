@@ -2,8 +2,13 @@ from tkinter import *
 from tkinter.ttk import *
 import tkinter.filedialog as FD
 
-def raise_frame(frame: Frame):
-    frame.tkraise()
+
+def raise_frame(frame_show, *frames_hide):
+    for frame_to_hide in frames_hide:
+        frame_to_hide.grid_forget()
+    frame_show.grid()
+    frame_show.tkraise()
+
 
 def page_open():
     page = Toplevel(personal_details)
@@ -17,26 +22,24 @@ def clicked():
 def setMenu(page):
     # TODO : Make the menu function (it has only labels for now)
     menubar = Menu(page)
-    menubar.add_command(label="Homepage", command=lambda: raise_frame(home_page))
-    menubar.add_command(label="Personal Details", command=lambda: raise_frame(personal_details))
+    menubar.add_command(label="Homepage", command=lambda: raise_frame(home_page,personal_details))
+    menubar.add_command(label="Personal Details", command=lambda: raise_frame(personal_details,home_page))
     menubar.add_command(label="Contacts", command=clicked())
     menubar.add_command(label="Contact Locations", command=clicked())
     menubar.add_command(label="Close", command=root.quit())
 
     root.config(menu=menubar)
 
+
 root = Tk()
-s = Style()
-s.configure('My.TFrame', background='white')
 # Home page - the main page of our program, from this page the user can navigate between the other pages
-home_page = Frame(root, width=500, height=500, style='My.TFrame')
-home_page.grid(row=0, column=0)
-#home_page.pack()
+home_page = Frame(root)
+# home_page.pack()
 # home_page.title("Home Page")
 root.minsize(300, 300)
 
-personal_details = Frame(root, width=500, height=500)
-personal_details.grid(row=0, column=0)
+personal_details = Frame(root)
+personal_details.grid_forget()
 
 # creation
 # TODO: change label location and text
@@ -44,7 +47,6 @@ main_title_HP = Label(home_page, text='Welcome!\n Here are your options:', font=
 main_title_PD = Label(personal_details,
                       text='Personal Details:\n Please fill in the following details according to the format',
                       font=("Arial Bold", 10))
-
 
 # TODO: add 'Back' button in each page
 btn_exit = Button(personal_details, text='Exit', command=exit)
