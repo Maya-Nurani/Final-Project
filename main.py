@@ -43,21 +43,25 @@ def sendCallBack():
 
 
 root = Tk()
+
 # Home page - the main page of our program, from this page the user can navigate between the other pages
 home_page = Frame(root)
 # home_page.pack()
 # home_page.title("Home Page")
-root.minsize(400, 200)
+#root.minsize(800, 400)
 
 main_title_HP = Label(home_page,
                       text="Welcome!\nYour are now watching XXX's information.\nPlease select an option at the menu",
                       font=("Arial Bold", 14))
 main_title_HP.pack(pady=100, padx=200)
 
+btn_close = Button(home_page, text="Exit", command=exit)  # Todo: move to menu?
+
+#personal details
 personal_details = Frame(root)
 personal_details.grid_forget()
 
-# creation
+    # creation
 # TODO: change label location and text
 main_title_PD = Label(personal_details,
                       text='Personal Details:\n Please fill in the following details according to the format',
@@ -65,7 +69,8 @@ main_title_PD = Label(personal_details,
 
 # TODO: add 'Back' button in each page
 btn_exit = Button(personal_details, text='Exit', command=exit)
-btn_close = Button(home_page, text="Exit", command=exit)  # Todo: move to menu?
+btn_back = Button(personal_details, text='Back to homepage', command=raise_frame(home_page, personal_details))
+
 
 # TODO: 'Click Here' or actually - 'save' button - will save the data into file (text file?)
 btn_send = Button(personal_details, text='Send', command=saveDetails)
@@ -95,8 +100,7 @@ rad_male = Radiobutton(personal_details, text='Male', value=1)
 rad_female = Radiobutton(personal_details, text='Female', value=2)
 
 # pack
-# main_title_HP.grid(row=0, column=0)
-main_title_HP.pack()
+#main_title_HP.grid(row=0, column=0)
 main_title_PD.grid(row=0, column=0)
 lbl_full_name.grid(row=1, column=0)
 txt_full_name.grid(row=1, column=10, columnspan=3)
