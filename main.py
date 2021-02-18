@@ -2,51 +2,46 @@ from tkinter import *
 from tkinter.ttk import *
 import tkinter.filedialog as FD
 
-
+#פונקציה אשר מציגה את הframe הנבחר בתפריט ומסתירה את האחרים
 def raise_frame(frame_show, *frames_hide):
     for frame_to_hide in frames_hide:
         frame_to_hide.grid_forget()
     frame_show.grid()
     frame_show.tkraise()
 
-
-def page_open():
-    page = Toplevel(personal_details)
-
-
 def clicked():
     full_name_val = txt_full_name.get()
     print('Clicked! This is your text:', full_name_val)
 
-
+#תפריט אשר עובד באמצעות הצגה והסתרה של frameים
 def setMenu(page):
-    # TODO : Make the menu function (it has only labels for now)
     menubar = Menu(page)
     menubar.add_command(label="Homepage", command=lambda: raise_frame(home_page,personal_details))
     menubar.add_command(label="Personal Details", command=lambda: raise_frame(personal_details,home_page))
     menubar.add_command(label="Contacts", command=clicked())
     menubar.add_command(label="Contact Locations", command=clicked())
-    menubar.add_command(label="Close", command=root.quit())
-
     root.config(menu=menubar)
-
 
 root = Tk()
 # Home page - the main page of our program, from this page the user can navigate between the other pages
 home_page = Frame(root)
 # home_page.pack()
 # home_page.title("Home Page")
-root.minsize(300, 300)
+root.minsize(400, 200)
+
+main_title_HP = Label(home_page, text="Welcome!\nYour are now watching XXX's information.\nPlease select an option at the menu", font=("Arial Bold", 14))
+main_title_HP.pack(pady=100, padx=200)
+
 
 personal_details = Frame(root)
 personal_details.grid_forget()
 
 # creation
 # TODO: change label location and text
-main_title_HP = Label(home_page, text='Welcome!\n Here are your options:', font=("Arial Bold", 14))
 main_title_PD = Label(personal_details,
                       text='Personal Details:\n Please fill in the following details according to the format',
                       font=("Arial Bold", 10))
+
 
 # TODO: add 'Back' button in each page
 btn_exit = Button(personal_details, text='Exit', command=exit)
