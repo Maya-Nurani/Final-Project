@@ -28,8 +28,9 @@ def setMenu(page):
     menubar.add_command(label="Exit", command=root.quit)
     root.config(menu=menubar)
 
+
 def objDetails():
-    #insert objects to obj by using array_details
+    # insert objects to obj by using array_details - (maybe done for now)
     obj = {
         lbl_full_name.cget("text"): array_details[0].get(),
         lbl_age.cget("text"): array_details[1].get(),
@@ -38,9 +39,10 @@ def objDetails():
     }
     return obj
 
+
 def saveDetails():
-    #if detailsValidation():
-    if True:
+    if detailsValidation():
+    #if True:
         print(objDetails().values())
         print(type(objDetails().values()))
         with open("users_personalDetails.txt", "w") as file:
@@ -55,16 +57,14 @@ def saveDetails():
 
 def detailsValidation():
     for i in objDetails().values():
-        if i != '':
-            print(i)
-
+        if i == '':
             return False
     return True
+
 
 def clearForm():
     for i in array_details:
         i.delete(0, END)
-
 
 
 def sendCallBack():
@@ -81,21 +81,21 @@ home_page = Frame(root)
 # contacts - person's contacts list
 contact = Frame(root)
 lbl_contacts_title = Label(contact, font=("Arial Bold", 10), text="contacts list")
-lbl_contacts_title.grid(row=0,column=0)
+lbl_contacts_title.grid(row=0, column=0)
 
 # personal details
 personal_details = Frame(root)
 main_title_HP = Label(home_page,
                       text="Welcome!\nYour are now watching XXX's information.\nPlease select an option at the menu",
                       font=("Arial Bold", 14))
-main_title_HP.grid(row=0,column=0)
+main_title_HP.grid(row=0, column=0)
 
 # creation
 # TODO: change label location and text
 main_title_PD = Label(personal_details,
                       text='Personal Details:\n Please fill in the following details according to the format',
                       font=("Arial Bold", 10))
-main_title_PD.grid(row=0,column=0)
+main_title_PD.grid(row=0, column=0)
 
 # TODO: add 'Back' button in each page
 
