@@ -34,8 +34,8 @@ def objDetails():
     obj = {
         lbl_full_name.cget("text"): array_details[0].get(),
         lbl_age.cget("text"): array_details[1].get(),
-        lbl_city.cget("text"): array_details[2].get()
-
+        lbl_city.cget("text"): array_details[2].get(),
+        lbl_gender.cget("text"): array_details[3].get()
     }
     return obj
 
@@ -52,7 +52,7 @@ def saveDetails():
         sendCallBack()
         # TODO: maybe we can close details page after the message :)
     else:
-        messagebox.showinfo('Validation error', 'Please fill in all details please')
+        messagebox.showinfo('Validation error', 'Please finish to fill in all your details')
 
 
 def detailsValidation():
@@ -64,7 +64,10 @@ def detailsValidation():
 
 def clearForm():
     for i in array_details:
-        i.delete(0, END)
+        if i == var_rad:
+            var_rad.set('')
+        else:
+            i.delete(0, END)
 
 
 def sendCallBack():
@@ -132,9 +135,12 @@ combo_city.current(0)  # Set default value
 # chk = Checkbutton(personal_details, text='choose', var=chk_state)
 
 # Gender
+var_rad = StringVar()
 lbl_gender = Label(personal_details, text='Gender')
-rad_male = Radiobutton(personal_details, text='Male', value=1)
-rad_female = Radiobutton(personal_details, text='Female', value=2)
+strMale = "Male"
+strFemale = "Female"
+rad_male = Radiobutton(personal_details, text=strMale, variable=var_rad, value=strMale)
+rad_female = Radiobutton(personal_details, text=strFemale, variable=var_rad, value=strFemale)
 
 # pack
 lbl_full_name.grid(row=1, column=0)
@@ -154,7 +160,7 @@ rad_male.grid(row=6, column=8)
 rad_female.grid(row=6, column=10)
 
 # Array of values from personal details form
-array_details = [txt_full_name, txt_age, combo_city]
+array_details = [txt_full_name, txt_age, combo_city, var_rad]
 
 setMenu(root)
 
