@@ -76,9 +76,16 @@ def sendCallBack():
 # Root is our main windoow (where we create frames)
 root = Tk()
 root.minsize(400, 200)
+root.config(bg="lightgreen")
+s= Style()
+s.configure('TFrame',foreground='#000000',background='lightgreen')
 
 # Home page - the main page of our program, from this page the user can navigate between the other pages
-home_page = Frame(root)
+home_page = Frame(root,style='TFrame')
+main_title_HP = Label(home_page,
+                      text="Welcome!\nYour are now watching XXX's information.\nPlease select an option at the menu",
+                      font=("Arial Bold", 14),foreground='#000000',background='lightgreen')
+main_title_HP.grid(row=0, column=0)
 
 # contacts - person's contacts list
 contact = Frame(root)
@@ -113,10 +120,6 @@ btn_addcontact.grid(row=1,column=2)
 
 # personal details
 personal_details = Frame(root)
-main_title_HP = Label(home_page,
-                      text="Welcome!\nYour are now watching XXX's information.\nPlease select an option at the menu",
-                      font=("Arial Bold", 14))
-main_title_HP.grid(row=0, column=0)
 
 # creation
 # TODO: change label location and text
