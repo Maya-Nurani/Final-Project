@@ -34,7 +34,7 @@ def objDetails():
     obj = {
         lbl_full_name.cget("text"): array_details[0].get(),
         lbl_age.cget("text"): array_details[1].get(),
-        lbl_city.cget("text"): combo_city.get()
+        lbl_city.cget("text"): array_details[2].get()
 
     }
     return obj
@@ -113,9 +113,18 @@ txt_age = Entry(personal_details, width=4)
 # numeric_age = int(txt_age.get())
 
 # City field
+cities_obj = {
+    0: '',
+    1: None,
+    2: 'Tel-Aviv',
+    3: 'Jerusalem',
+    4: 'Yavne',
+    5: 'Ramat-Gan',
+    6: 'Haifa'
+}
 lbl_city = Label(personal_details, text='City')
-combo_city = Combobox(personal_details)
-combo_city['values'] = (None, 'Tel-Aviv', 'Jerusalem', 'Ramat-Gan', 'Haifa', 'Yavne')
+combo_city = Combobox(personal_details, values=list(cities_obj.values()))
+#combo_city['values'] = (None, 'Tel-Aviv', 'Jerusalem', 'Ramat-Gan', 'Haifa', 'Yavne')
 combo_city.current(0)  # Set default value
 
 # chk_state = BooleanVar()
@@ -145,7 +154,7 @@ rad_male.grid(row=6, column=8)
 rad_female.grid(row=6, column=10)
 
 # Array of values from personal details form
-array_details = [txt_full_name, txt_age]
+array_details = [txt_full_name, txt_age, combo_city]
 
 setMenu(root)
 
