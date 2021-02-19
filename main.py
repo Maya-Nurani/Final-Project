@@ -27,19 +27,47 @@ def setMenu(page):
     menubar.add_command(label="Contact locations", command=clicked())
     root.config(menu=menubar)
 
+def objDetails():
+    #insert objects to obj by using array_details
+    obj = {
+        lbl_full_name.cget("text"): array_details[0].get(),
+        lbl_age.cget("text"): array_details[1].get(),
+        lbl_city.cget("text"): combo_city.get()
+
+    }
+    return obj
 
 def saveDetails():
-    user_details = txt_full_name.get() + ',' + txt_age.get()
-    # with open("users_personalDetails.txt") as fh:
-    print(user_details)
+    #if detailsValidation():
+    if True:
+        print(objDetails().values())
+        print(type(objDetails().values()))
+        with open("users_personalDetails.txt", "w") as file:
+            file.write(str(objDetails()))
 
-    # confirmation popup - let the user know the details saved
-    sendCallBack()
-    # TODO: maybe we can close details page after the message :)
+        # confirmation popup - let the user know the details saved
+        sendCallBack()
+        # TODO: maybe we can close details page after the message :)
+    else:
+        messagebox.showinfo('Validation error', 'Please fill in all details please')
+
+
+def detailsValidation():
+    for i in objDetails().values():
+        if i != '':
+            print(i)
+
+            return False
+    return True
+
+def clearForm():
+    for i in array_details:
+        i.delete(0, END)
+
 
 
 def sendCallBack():
-    messagebox.showinfo('confirmation', 'Action success')
+    messagebox.showinfo('confirmation', '{0}, your details saved successfully!'.format(txt_full_name.get()))
 
 
 root = Tk()
@@ -74,6 +102,7 @@ btn_back = Button(personal_details, text='Back to homepage', command=raise_frame
 
 # TODO: 'Click Here' or actually - 'save' button - will save the data into file (text file?)
 btn_send = Button(personal_details, text='Send', command=saveDetails)
+btn_clear = Button(personal_details, text='Clear', command=clearForm)
 
 # Full Name field
 lbl_full_name = Label(personal_details, text='Full Name')
@@ -109,6 +138,7 @@ txt_age.grid(row=2, column=10)
 lbl_city.grid(row=4, column=0)
 
 btn_send.grid(row=12, column=0)
+btn_clear.grid(row=13, column=15)
 
 btn_exit.grid(row=20, column=0)
 
@@ -120,6 +150,9 @@ combo_city.grid(row=4, column=10)
 lbl_gender.grid(row=6, column=0)
 rad_male.grid(row=6, column=8)
 rad_female.grid(row=6, column=10)
+
+# Array of values from personal details form
+array_details = [txt_full_name, txt_age]
 
 setMenu(root)
 
