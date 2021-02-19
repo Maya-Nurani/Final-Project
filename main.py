@@ -21,10 +21,10 @@ def clicked():
 # תפריט אשר עובד באמצעות הצגה והסתרה של frameים
 def setMenu(page):
     menubar = Menu(page)
-    menubar.add_command(label="Homepage", command=lambda: raise_frame(home_page, personal_details, contact))
-    menubar.add_command(label="Personal details", command=lambda: raise_frame(personal_details, home_page, contact))
-    menubar.add_command(label="Contacts", command=lambda: raise_frame(contact, home_page, personal_details))
-    menubar.add_command(label="Contact locations", command=clicked())
+    menubar.add_command(label="Homepage", command=lambda: raise_frame(home_page, personal_details, contact,locations))
+    menubar.add_command(label="Personal details", command=lambda: raise_frame(personal_details, home_page, contact,locations))
+    menubar.add_command(label="Contacts", command=lambda: raise_frame(contact, home_page, personal_details,locations))
+    menubar.add_command(label="Contact locations", command= lambda: raise_frame(locations, contact, home_page, personal_details))
     menubar.add_command(label="Exit", command=root.quit)
     root.config(menu=menubar)
 
@@ -70,7 +70,6 @@ def clearForm():
 def sendCallBack():
     messagebox.showinfo('confirmation', '{0}, your details saved successfully!'.format(txt_full_name.get()))
 
-
 # Root is our main windoow (where we create frames)
 root = Tk()
 root.minsize(400, 200)
@@ -82,6 +81,32 @@ home_page = Frame(root)
 contact = Frame(root)
 lbl_contacts_title = Label(contact, font=("Arial Bold", 10), text="contacts list")
 lbl_contacts_title.grid(row=0, column=0)
+lbl_nameofcontact = Label(contact, font=("Arial Bold", 10), text="Contact's name:")
+lbl_nameofcontact.grid(row=1,column=0)
+txt_nameofcontact = Entry(contact, width=20)
+txt_nameofcontact.grid(row=1, column=1)
+lbl_idofcontact = Label(contact, font=("Arial Bold", 10), text="Contact's ID:")
+lbl_idofcontact.grid(row=2,column=0)
+txt_phoneofcontact = Entry(contact, width=20)
+txt_phoneofcontact.grid(row=2, column=1)
+lbl_phoneofcontact = Label(contact, font=("Arial Bold", 10), text="Contact's phone:")
+lbl_phoneofcontact.grid(row=3,column=0)
+txt_phoneofcontact = Entry(contact, width=20)
+txt_phoneofcontact.grid(row=3, column=1)
+btn_addcontact= Button(contact, text='Add Contact')
+btn_addcontact.grid(row=4,column=0)
+
+# locations - person's contact locations list
+locations = Frame(root)
+lbl_locations_title = Label(locations, font=("Arial Bold", 10), text="contact locations list")
+lbl_locations_title.grid(row=0, column=0)
+lbl_newlocation = Label(locations, font=("Arial Bold", 10), text="Contact's phone:")
+lbl_newlocation.grid(row=1,column=0)
+txt_newlocation = Entry(locations, width=20)
+txt_newlocation.grid(row=1, column=1)
+btn_addcontact= Button(locations, text='Add Location')
+btn_addcontact.grid(row=1,column=2)
+
 
 # personal details
 personal_details = Frame(root)
