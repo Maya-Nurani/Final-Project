@@ -10,7 +10,7 @@ import tkinter.filedialog as FD
 def raise_frame(frame_show, *frames_hide):
     for frame_to_hide in frames_hide:
         frame_to_hide.grid_forget()
-    frame_show.grid()
+    frame_show.grid(padx=50,pady=50)
     frame_show.tkraise()
 
 # תפריט אשר עובד באמצעות הצגה והסתרה של frameים
@@ -77,17 +77,19 @@ def updateContactsLocations():
 
 # Root is our main windoow (where we create frames)
 root = Tk()
-root.minsize(600, 300)
+root.minsize(600, 250)
 root.config(bg="lightgreen")
 s= Style()
 s.configure('TFrame',foreground='#000000',background='lightgreen')
 
 # Home page - the main page of our program, from this page the user can navigate between the other pages
-home_page = Frame(root,style='TFrame')
+home_page = Frame(root)
 main_title_HP = Label(home_page,
-                      text="Welcome!\nYour are now watching XXX's information.\nPlease select an option at the menu",
-                      font=("Arial Bold", 14),foreground='#000000',background='lightgreen')
-main_title_HP.grid(row=0, column=0)
+                      text="COV-19\nEpidemiological Investigation System",
+                      font=("Arial Bold", 16))
+main_title_HP.grid(row=0, column=0,padx=50,pady=50)
+lbl_startinvestigation = Label(home_page,text="to start, select an option from the menu.",font=("Arial Bold",14))
+lbl_startinvestigation.grid(row=1,column=0)
 
 # contacts - person's contacts list
 contact = Frame(root)
@@ -113,7 +115,7 @@ btn_add_contact.grid(row=4, column=0)
 # locations - person's contact locations list
 locations = Frame(root)
 lbl_locations_title = Label(locations, font=("Arial Bold", 10), text="contact locations list")
-lbl_locations_title.grid(row=0, column=0)
+lbl_locations_title.grid(row=0, columnspan=20)
 lbl_newlocation = Label(locations, font=("Arial Bold", 10), text="Full address:")
 lbl_newlocation.grid(row=1,column=0)
 txt_newlocation = Entry(locations, width=20)
@@ -124,16 +126,16 @@ txt_datefbeing = Entry(locations, width=20)
 txt_datefbeing.grid(row=2, column=1)
 btn_add_location = Button(locations, text='Add Location', command=lambda: saveFormData(objData(array_location_keys, array_location_values),
                                                'users_locations',"a"))
-btn_add_location.grid(row=1, column=2)
+btn_add_location.grid(row=3, column=1)
 
 # personal details
 personal_details = Frame(root)
 
 # creation
 main_title_PD = Label(personal_details,
-                      text='Personal Details:\n Please fill in the following details according to the format',
+                      text='Personal Details:\n Please fill in the following details,according to the format',
                       font=("Arial Bold", 10))
-main_title_PD.grid(row=0, column=0)
+main_title_PD.grid(row=0, columnspan=20)
 
 btn_send = Button(personal_details, text='Send', command=lambda: saveFormData(objData(array_details_keys, array_details_values),
                                                'users_personalDetails', "w"))
@@ -177,20 +179,20 @@ rad_female = Radiobutton(personal_details, text=strFemale, variable=var_rad, val
 
 # pack
 lbl_full_name.grid(row=1, column=0)
-txt_full_name.grid(row=1, column=10)
+txt_full_name.grid(row=1, column=1)
 lbl_age.grid(row=2, column=0)
-txt_age.grid(row=2, column=10)
-lbl_city.grid(row=4, column=0)
+txt_age.grid(row=2, column=1)
+lbl_city.grid(row=3, column=0)
 
-btn_send.grid(row=12, column=0)
-btn_clear.grid(row=13, column=15)
+btn_send.grid(row=6, column=0)
+btn_clear.grid(row=6, column=1)
 
-combo_city.grid(row=4, column=10)
+combo_city.grid(row=3, column=1)
 # chk.grid(row=5, column=0)
 
-lbl_gender.grid(row=6, column=0)
-rad_male.grid(row=6, column=8)
-rad_female.grid(row=6, column=10)
+lbl_gender.grid(row=5, column=0)
+rad_male.grid(row=5, column=1)
+rad_female.grid(row=5, column=2)
 
 # Array of values from the forms
 array_details_keys = [lbl_full_name, lbl_age, lbl_city, lbl_gender]
@@ -203,13 +205,13 @@ array_location_values = [txt_newlocation,txt_datefbeing]
 # summary
 summary = Frame(root)
 btn_refresh = Button(summary, text="refresh", command= lambda: updateContactsLocations())
-btn_refresh.grid(row=0, column=0)
+btn_refresh.grid(row=5, column=0)
 lbl_sumoflocations = Label(summary, text='Locations summary:')
 lbl_sumoflocations.grid(row=1,column=0)
 lbl_sumofcontacts = Label(summary, text='Contacts summary:')
 lbl_sumofcontacts.grid(row=3,column=0)
 btn_quarantine = Button(summary, text='Send all to quarantine')
-btn_quarantine.grid(row=5,column=0)
+btn_quarantine.grid(row=5,column=1)
 
 setMenu(root)
 
