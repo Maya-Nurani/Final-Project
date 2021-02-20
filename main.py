@@ -1,9 +1,6 @@
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
-import itertools
-
-import tkinter.filedialog as FD
 
 
 def initial_files(file_name):
@@ -23,7 +20,7 @@ def raise_frame(frame_show, *frames_hide):
     frame_show.tkraise()
 
 
-# תפריט אשר עובד באמצעות הצגה והסתרה של frameים
+# Menu that works by hide and display other frames
 def setMenu(page):
     menubar = Menu(page)
     menubar.add_command(label="Homepage",
@@ -44,7 +41,6 @@ def objData(arr_keys, arr_val):
     obj = {}
     for x, y in zip(arr_keys, arr_val):
         obj[x.cget("text")] = y.get()
-
     return obj
 
 
@@ -59,7 +55,7 @@ def saveFormData(form_data, file_name, stat):
         except:
             print("No founded file with this name:", file_name)
 
-        # Confirmation popup - let the user know the details saved
+        # Confirmation popup message - let the user know the details saved
         sendCallBack()
     else:
         messagebox.showinfo('Validation error', 'Please finish to fill in all fields')
@@ -94,7 +90,6 @@ def sendQuarantine():
 
 
 def updateContactsLocations():
-
     try:
         with open("users_locations.txt", "r") as locationfile:
             locations_list = locationfile.read()
@@ -145,7 +140,7 @@ main_title_HP.grid(row=0, column=0, padx=50, pady=50)
 lbl_startinvestigation = Label(home_page, text="to start, select an option from the menu.", font=("Arial Bold", 14))
 lbl_startinvestigation.grid(row=1, column=0)
 
-# contacts - person's contacts list
+# Contacts - person's contacts list
 contact = Frame(root)
 lbl_contacts_title = Label(contact, font=("Arial Bold", 12), text="Contacts list:\n Please enter all patient's contacts,\n in the last 10 days")
 lbl_contacts_title.grid(row=0, column=0)
@@ -196,14 +191,12 @@ btn_send = Button(personal_details, text='Send',
                   command=lambda: saveFormData(objData(array_details_keys, array_details_values),
                                                'users_personalDetails', "w"))
 btn_clear = Button(personal_details, text='Clear', command=clearForm)
-# TODO : add clear button also to other pages?
 
 # Full Name field
 lbl_full_name = Label(personal_details, text='Full Name')
 txt_full_name = Entry(personal_details, width=20)
 
 # Age (Can be as 'date of birth' and split by Year-Month-Day)
-# TODO : check for date format
 lbl_age = Label(personal_details, text='Age')
 txt_age = Entry(personal_details, width=4)
 # numeric_age = int(txt_age.get())
@@ -221,10 +214,6 @@ cities_obj = {
 lbl_city = Label(personal_details, text='City')
 combo_city = Combobox(personal_details, values=list(cities_obj.values()))
 combo_city.current(0)  # Set default value
-
-# chk_state = BooleanVar()
-# chk_state.set(False)  # Set default state
-# chk = Checkbutton(personal_details, text='choose', var=chk_state)
 
 # Gender
 var_rad = StringVar()
@@ -245,7 +234,6 @@ btn_send.grid(row=6, column=0)
 btn_clear.grid(row=6, column=1)
 
 combo_city.grid(row=3, column=1)
-# chk.grid(row=5, column=0)
 
 lbl_gender.grid(row=5, column=0)
 rad_male.grid(row=5, column=1)
@@ -259,15 +247,13 @@ array_contacts_values = [txt_contact_name, txt_contact_id, txt_contact_phone]
 array_location_keys = [lbl_newlocation, lbl_datefbeing]
 array_location_values = [txt_newlocation, txt_datefbeing]
 
-# summary
+# Summary frame
 summary = Frame(root)
 btn_refresh = Button(summary, text="Load contacts and locations", command=lambda: updateContactsLocations())
 btn_refresh.grid(row=0, column=0)
 btn_quarantine = Button(summary, text="Send everybody to quarantine", command=sendQuarantine)
 btn_quarantine.grid(row=0, column=1)
 
-
 setMenu(root)
-
 raise_frame(home_page)
 root.mainloop()
