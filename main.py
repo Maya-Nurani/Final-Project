@@ -6,6 +6,15 @@ import itertools
 import tkinter.filedialog as FD
 
 
+def initial_files(file_name):
+   try:
+        with open("{0}.txt".format(file_name), "w") as file:
+            file.write("")
+   except:
+        print("No founded file with this name:", file_name)
+
+
+
 # פונקציה אשר מציגה את הframe הנבחר בתפריט ומסתירה את האחרים
 def raise_frame(frame_show, *frames_hide):
     for frame_to_hide in frames_hide:
@@ -42,9 +51,9 @@ def objData(arr_keys, arr_val):
 def saveFormData(form_data, file_name, stat):
     if detailsValidation(form_data):
         try:
-
             with open("{0}.txt".format(file_name), "{0}".format(stat)) as file:
-                file.write(str(form_data))
+                str_current_form_data = str(list(form_data.values()))
+                file.write(str_current_form_data + "\n")
         except:
             print("No founded file with this name:", file_name)
 
@@ -78,19 +87,30 @@ def updateContactsLocations():
     try:
         with open("users_locations.txt", "r") as locationfile:
             locations_list = locationfile.read()
+        for index, item in enumerate(array_location_keys, start= 1):
+            lbl_locations_labels = Label(summary, text=item.cget("text"))
+            lbl_locations_labels.grid(row=1, column=index)
         lbl_locations_list = Label(summary, text=locations_list)
-        lbl_locations_list.grid(row=2, column=0)
+        lbl_locations_list.grid(row=2, column=1)
+
     except:
         print("No founded file")
 
     try:
         with open("contactsFile.txt", "r") as file:
-            contactList = file.read()
+            contactList = file.readlines()
+
+        for index, item in enumerate(array_contacts_keys, start= 1):
+            lbl_locations_labels = Label(summary, text=item.cget("text"))
+            lbl_locations_labels.grid(row=3, column=index)
         lbl_contacts_list = Label(summary, text=contactList)
         lbl_contacts_list.grid(row=4, column=0)
     except:
         print("No founded file")
 
+
+initial_files("contactsFile")
+initial_files("users_locations")
 
 # Root is our main window (where we create frames)
 root = Tk()
