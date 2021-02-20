@@ -54,7 +54,6 @@ def saveDetails():
     else:
         messagebox.showinfo('Validation error', 'Please finish to fill in all your details')
 
-
 def detailsValidation():
     for i in objDetails().values():
         if i == '':
@@ -69,6 +68,57 @@ def clearForm():
         else:
             i.delete(0, END)
 
+def objContacts():
+    # insert objects to obj by using array_contacts - (maybe done for now)
+    obj = {
+        lbl_nameofcontact.cget("text"): array_contacts[0].get(),
+        lbl_idofcontact.cget("text"): array_contacts[1].get(),
+        lbl_phoneofcontact.cget("text"): array_contacts[2].get(),
+    }
+    return obj
+
+def saveContacts():
+    if contactsValidation():
+    #if True:
+        print(objContacts().values())
+        print(type(objContacts().values()))
+        with open("user_contacts.txt", "w") as file:
+            file.write(str(objContacts()))
+        # confirmation popup - let the user know the details saved
+        sendCallBack()
+    else:
+        messagebox.showinfo('Validation error', 'Please finish to fill in all your details')
+
+def contactsValidation():
+    for i in objContacts().values():
+        if i == '':
+            return False
+    return True
+
+def objLocations():
+    # insert objects to obj by using array_locations - (maybe done for now)
+    obj = {
+        lbl_newlocation.cget("text"): array_locations[0].get(),
+        lbl_datefbeing.cget("text"): array_locations[1].get(),
+    }
+    return obj
+
+def saveLocations():
+    if locationsValidation():
+        #if True:
+        print(objLocations().values())
+        print(type(objLocations().values()))
+        with open("user_locations.txt", "w") as file:
+            file.write(str(objLocations()))
+        sendCallBack()
+    else:
+        messagebox.showinfo('Validation error', 'Please finish to fill in all your details')
+
+def locationsValidation():
+    for i in objLocations().values():
+        if i == '':
+            return False
+    return True
 
 def sendCallBack():
     messagebox.showinfo('confirmation', '{0}, your details saved successfully!'.format(txt_full_name.get()))
@@ -91,32 +141,35 @@ main_title_HP.grid(row=0, column=0)
 contact = Frame(root)
 lbl_contacts_title = Label(contact, font=("Arial Bold", 10), text="contacts list")
 lbl_contacts_title.grid(row=0, column=0)
-lbl_nameofcontact = Label(contact, font=("Arial Bold", 10), text="Contact's name:")
+lbl_nameofcontact = Label(contact, font=("Arial Bold", 10), text="Contacts name:")
 lbl_nameofcontact.grid(row=1,column=0)
 txt_nameofcontact = Entry(contact, width=20)
 txt_nameofcontact.grid(row=1, column=1)
-lbl_idofcontact = Label(contact, font=("Arial Bold", 10), text="Contact's ID:")
+lbl_idofcontact = Label(contact, font=("Arial Bold", 10), text="Contacts ID:")
 lbl_idofcontact.grid(row=2,column=0)
-txt_phoneofcontact = Entry(contact, width=20)
-txt_phoneofcontact.grid(row=2, column=1)
-lbl_phoneofcontact = Label(contact, font=("Arial Bold", 10), text="Contact's phone:")
+txt_idofcontact = Entry(contact, width=20)
+txt_idofcontact.grid(row=2, column=1)
+lbl_phoneofcontact = Label(contact, font=("Arial Bold", 10), text="Contacts phone:")
 lbl_phoneofcontact.grid(row=3,column=0)
 txt_phoneofcontact = Entry(contact, width=20)
 txt_phoneofcontact.grid(row=3, column=1)
-btn_addcontact= Button(contact, text='Add Contact')
+btn_addcontact= Button(contact, text='Add Contact', command=saveContacts)
 btn_addcontact.grid(row=4,column=0)
 
 # locations - person's contact locations list
 locations = Frame(root)
 lbl_locations_title = Label(locations, font=("Arial Bold", 10), text="contact locations list")
 lbl_locations_title.grid(row=0, column=0)
-lbl_newlocation = Label(locations, font=("Arial Bold", 10), text="Contact's phone:")
+lbl_newlocation = Label(locations, font=("Arial Bold", 10), text="Full address:")
 lbl_newlocation.grid(row=1,column=0)
 txt_newlocation = Entry(locations, width=20)
 txt_newlocation.grid(row=1, column=1)
-btn_addcontact= Button(locations, text='Add Location')
-btn_addcontact.grid(row=1,column=2)
-
+lbl_datefbeing = Label(locations, font=("Arial Bold", 10), text="Date:")
+lbl_datefbeing.grid(row=2,column=0)
+txt_datefbeing = Entry(locations, width=20)
+txt_datefbeing.grid(row=2, column=1)
+btn_addlocation= Button(locations, text='Add Location', command=saveLocations)
+btn_addlocation.grid(row=2,column=2)
 
 # personal details
 personal_details = Frame(root)
@@ -189,6 +242,8 @@ rad_female.grid(row=6, column=10)
 
 # Array of values from personal details form
 array_details = [txt_full_name, txt_age, combo_city, var_rad]
+array_contacts = [txt_nameofcontact, txt_idofcontact, txt_phoneofcontact]
+array_locations = [txt_newlocation, txt_datefbeing]
 
 setMenu(root)
 
