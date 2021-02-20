@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
-import itertools
 
 import tkinter.filedialog as FD
 
@@ -28,7 +27,6 @@ def setMenu(page):
 
 
 def objData(arr_keys, arr_val):
-    # insert objects to obj by using array_details - (maybe done for now)
     obj = {}
     for x, y in zip(arr_keys, arr_val):
         obj[x.cget("text")] = y.get()
@@ -39,16 +37,15 @@ def objData(arr_keys, arr_val):
 
 def saveFormData(form_data, file_name):
     if detailsValidation(form_data):
-        print(form_data.values())
-        print(type(form_data.values()))
+        #TODO: check if needed to add try & except
         with open("{0}.txt".format(file_name), "w") as file:
             file.write(str(form_data))
 
         # Confirmation popup - let the user know the details saved
-        sendCallBack()
+        sendCallBack(form_data)
         # TODO: maybe we can close details page after the message :)
     else:
-        messagebox.showinfo('Validation error', 'Please finish to fill in all your details')
+        messagebox.showinfo('Validation error', 'Please finish to fill in all fields')
 
 
 def detailsValidation(form_data):
@@ -66,11 +63,12 @@ def clearForm():
             i.delete(0, END)
 
 
-def sendCallBack():
-    messagebox.showinfo('confirmation', '{0}, your details saved successfully!'.format(txt_full_name.get()))
+def sendCallBack(form_data):
+    obj_values = list(form_data.values())
+    messagebox.showinfo('confirmation', '{0}, your details saved successfully!'.format(obj_values[0]))
 
 
-# Root is our main windoow (where we create frames)
+# Root is our main window (where we create frames)
 root = Tk()
 root.minsize(400, 200)
 root.config(bg="lightgreen")
@@ -132,6 +130,7 @@ btn_send = Button(personal_details, text='Send',
                   command=lambda: saveFormData(objData(array_details_keys, array_details_values),
                                                'users_personalDetails'))
 btn_clear = Button(personal_details, text='Clear', command=clearForm)
+# TODO : add clear button also to other pages?
 
 # Full Name field
 lbl_full_name = Label(personal_details, text='Full Name')
