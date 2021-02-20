@@ -4,15 +4,14 @@ from tkinter import messagebox
 
 
 def initial_files(file_name):
-   try:
+    try:
         with open("{0}.txt".format(file_name), "w") as file:
             file.write("")
-   except:
+    except:
         print("No founded file with this name:", file_name)
 
 
-
-# פונקציה אשר מציגה את הframe הנבחר בתפריט ומסתירה את האחרים
+# menu controller - display frame and hide others
 def raise_frame(frame_show, *frames_hide):
     for frame_to_hide in frames_hide:
         frame_to_hide.grid_forget()
@@ -80,6 +79,7 @@ def sendCallBack():
     user_name = txt_full_name.get()
     messagebox.showinfo('Confirmation', '{0}\nYour details saved successfully!'.format(user_name))
 
+
 def sendQuarantine():
     with open("contactsFile.txt", "r") as file:
         contactList = file.read()
@@ -119,7 +119,6 @@ def updateContactsLocations():
         print("File not found")
 
 
-
 initial_files("contactsFile")
 initial_files("users_locations")
 
@@ -142,7 +141,8 @@ lbl_startinvestigation.grid(row=1, column=0)
 
 # Contacts - person's contacts list
 contact = Frame(root)
-lbl_contacts_title = Label(contact, font=("Arial Bold", 12), text="Contacts list:\n Please enter all patient's contacts,\n in the last 10 days")
+lbl_contacts_title = Label(contact, font=("Arial Bold", 12),
+                           text="Contacts list:\n Please enter all patient's contacts,\n in the last 10 days")
 lbl_contacts_title.grid(row=0, column=0)
 lbl_contact_name = Label(contact, font=("Arial Bold", 10), text="Contact's name:")
 lbl_contact_name.grid(row=1, column=0)
@@ -163,7 +163,8 @@ btn_add_contact.grid(row=4, column=0)
 
 # locations - person's contact locations list
 locations = Frame(root)
-lbl_locations_title = Label(locations, font=("Arial Bold", 12), text="Contact Locations list:\n Please enter patient's locations for the last 10 days")
+lbl_locations_title = Label(locations, font=("Arial Bold", 12),
+                            text="Contact Locations list:\n Please enter patient's locations for the last 10 days")
 lbl_locations_title.grid(row=0, columnspan=20)
 lbl_newlocation = Label(locations, font=("Arial Bold", 10), text="Full address:")
 lbl_newlocation.grid(row=1, column=0)
