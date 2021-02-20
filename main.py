@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
+import itertools
 
 import tkinter.filedialog as FD
 
@@ -11,12 +12,6 @@ def raise_frame(frame_show, *frames_hide):
         frame_to_hide.grid_forget()
     frame_show.grid()
     frame_show.tkraise()
-
-
-def clicked():
-    full_name_val = txt_full_name.get()
-    print('Clicked! This is your text:', full_name_val)
-
 
 # תפריט אשר עובד באמצעות הצגה והסתרה של frameים
 def setMenu(page):
@@ -30,106 +25,52 @@ def setMenu(page):
     root.config(menu=menubar)
 
 
-def objDetails():
+def objData(arr_keys, arr_val):
     # insert objects to obj by using array_details - (maybe done for now)
-    obj = {
-        lbl_full_name.cget("text"): array_details[0].get(),
-        lbl_age.cget("text"): array_details[1].get(),
-        lbl_city.cget("text"): array_details[2].get(),
-        lbl_gender.cget("text"): array_details[3].get()
-    }
+    obj = {}
+    for x, y in zip(arr_keys, arr_val):
+        obj[x.cget("text")] = y.get()
+
+    print(obj)
     return obj
 
 
-def saveDetails():
-    if detailsValidation():
-    #if True:
-        print(objDetails().values())
-        print(type(objDetails().values()))
-        with open("users_personalDetails.txt", "w") as file:
-            file.write(str(objDetails()))
+def saveFormData(form_data, file_name,stat):
+    if detailsValidation(form_data):
+        print(form_data.values())
+        print(type(form_data.values()))
+        with open("{0}.{1}".format(file_name,"txt"), "{0}".format(stat)) as file:
+            file.write(str(form_data))
 
-        # confirmation popup - let the user know the details saved
-        sendCallBack()
+        # Confirmation popup - let the user know the details saved
+        sendCallBack(form_data)
         # TODO: maybe we can close details page after the message :)
     else:
         messagebox.showinfo('Validation error', 'Please finish to fill in all your details')
 
-def detailsValidation():
-    for i in objDetails().values():
+def detailsValidation(form_data):
+    for i in form_data.values():
         if i == '':
             return False
     return True
 
-
 def clearForm():
-    for i in array_details:
+    for i in array_details_values:
         if i == var_rad:
             var_rad.set('')
         else:
             i.delete(0, END)
 
-def objContacts():
-    # insert objects to obj by using array_contacts - (maybe done for now)
-    obj = {
-        lbl_nameofcontact.cget("text"): array_contacts[0].get(),
-        lbl_idofcontact.cget("text"): array_contacts[1].get(),
-        lbl_phoneofcontact.cget("text"): array_contacts[2].get(),
-    }
-    return obj
-
-def saveContacts():
-    if contactsValidation():
-    #if True:
-        print(objContacts().values())
-        print(type(objContacts().values()))
-        with open("user_contacts.txt", "a") as file:
-            file.write(str(objContacts()))
-        # confirmation popup - let the user know the details saved
-        sendCallBack()
-    else:
-        messagebox.showinfo('Validation error', 'Please finish to fill in all your details')
-
-def contactsValidation():
-    for i in objContacts().values():
-        if i == '':
-            return False
-    return True
-
-def objLocations():
-    # insert objects to obj by using array_locations - (maybe done for now)
-    obj = {
-        lbl_newlocation.cget("text"): array_locations[0].get(),
-        lbl_datefbeing.cget("text"): array_locations[1].get(),
-    }
-    return obj
-
-def saveLocations():
-    if locationsValidation():
-        #if True:
-        print(objLocations().values())
-        print(type(objLocations().values()))
-        with open("user_locations.txt", "a") as file:
-            file.write(str(objLocations()))
-        sendCallBack()
-    else:
-        messagebox.showinfo('Validation error', 'Please finish to fill in all your details')
-
-def locationsValidation():
-    for i in objLocations().values():
-        if i == '':
-            return False
-    return True
-
-def sendCallBack():
-    messagebox.showinfo('confirmation', '{0}, your details saved successfully!'.format(txt_full_name.get()))
+def sendCallBack(form_data):
+    obj_values = list(form_data.values())
+    messagebox.showinfo('confirmation', '{0}, your details saved successfully!'.format(obj_values[0]))
 
 def updateContactsLocations():
-    with open("user_locations.txt", "r") as locationfile:
+    with open("users_locations.txt", "r") as locationfile:
         locations_list = locationfile.read()
     lbl_locations_list = Label(summary, text=locations_list)
     lbl_locations_list.grid(row=2, column=0)
-    with open("user_contacts.txt", "r") as file:
+    with open("contactsFile.txt", "r") as file:
         contactList = file.read()
     lbl_contacts_list = Label(summary, text=contactList)
     lbl_contacts_list.grid(row=4, column=0)
@@ -152,20 +93,22 @@ main_title_HP.grid(row=0, column=0)
 contact = Frame(root)
 lbl_contacts_title = Label(contact, font=("Arial Bold", 10), text="contacts list")
 lbl_contacts_title.grid(row=0, column=0)
-lbl_nameofcontact = Label(contact, font=("Arial Bold", 10), text="Contacts name:")
-lbl_nameofcontact.grid(row=1,column=0)
-txt_nameofcontact = Entry(contact, width=20)
-txt_nameofcontact.grid(row=1, column=1)
-lbl_idofcontact = Label(contact, font=("Arial Bold", 10), text="Contacts ID:")
-lbl_idofcontact.grid(row=2,column=0)
-txt_idofcontact = Entry(contact, width=20)
-txt_idofcontact.grid(row=2, column=1)
-lbl_phoneofcontact = Label(contact, font=("Arial Bold", 10), text="Contacts phone:")
-lbl_phoneofcontact.grid(row=3,column=0)
-txt_phoneofcontact = Entry(contact, width=20)
-txt_phoneofcontact.grid(row=3, column=1)
-btn_addcontact= Button(contact, text='Add Contact', command=saveContacts)
-btn_addcontact.grid(row=4,column=0)
+lbl_contact_name = Label(contact, font=("Arial Bold", 10), text="Contact's name:")
+lbl_contact_name.grid(row=1, column=0)
+txt_contact_name = Entry(contact, width=20)
+txt_contact_name.grid(row=1, column=1)
+lbl_contact_id = Label(contact, font=("Arial Bold", 10), text="Contact's ID:")
+lbl_contact_id.grid(row=2, column=0)
+txt_contact_id = Entry(contact, width=20)
+txt_contact_id.grid(row=2, column=1)
+lbl_contact_phone = Label(contact, font=("Arial Bold", 10), text="Contact's phone:")
+lbl_contact_phone.grid(row=3, column=0)
+txt_contact_phone = Entry(contact, width=20)
+txt_contact_phone.grid(row=3, column=1)
+btn_add_contact = Button(contact, text='Add Contact',
+                         command=lambda: saveFormData(objData(array_contacts_keys, array_contacts_values),
+                                                      'contactsFile',"a"))
+btn_add_contact.grid(row=4, column=0)
 
 # locations - person's contact locations list
 locations = Frame(root)
@@ -179,23 +122,21 @@ lbl_datefbeing = Label(locations, font=("Arial Bold", 10), text="Date:")
 lbl_datefbeing.grid(row=2,column=0)
 txt_datefbeing = Entry(locations, width=20)
 txt_datefbeing.grid(row=2, column=1)
-btn_addlocation= Button(locations, text='Add Location', command=saveLocations)
-btn_addlocation.grid(row=2,column=2)
+btn_add_location = Button(locations, text='Add Location', command=lambda: saveFormData(objData(array_location_keys, array_location_values),
+                                               'users_locations',"a"))
+btn_add_location.grid(row=1, column=2)
 
 # personal details
 personal_details = Frame(root)
 
 # creation
-# TODO: change label location and text
 main_title_PD = Label(personal_details,
                       text='Personal Details:\n Please fill in the following details according to the format',
                       font=("Arial Bold", 10))
 main_title_PD.grid(row=0, column=0)
 
-# TODO: add 'Back' button in each page
-
-# TODO: 'Click Here' or actually - 'save' button - will save the data into file (text file?)
-btn_send = Button(personal_details, text='Send', command=saveDetails)
+btn_send = Button(personal_details, text='Send', command=lambda: saveFormData(objData(array_details_keys, array_details_values),
+                                               'users_personalDetails', "w"))
 btn_clear = Button(personal_details, text='Clear', command=clearForm)
 
 # Full Name field
@@ -252,9 +193,12 @@ rad_male.grid(row=6, column=8)
 rad_female.grid(row=6, column=10)
 
 # Array of values from the forms
-array_details = [txt_full_name, txt_age, combo_city, var_rad]
-array_contacts = [txt_nameofcontact, txt_idofcontact, txt_phoneofcontact]
-array_locations = [txt_newlocation, txt_datefbeing]
+array_details_keys = [lbl_full_name, lbl_age, lbl_city, lbl_gender]
+array_details_values = [txt_full_name, txt_age, combo_city, var_rad]
+array_contacts_keys = [lbl_contact_name, lbl_contact_id, lbl_contact_phone]
+array_contacts_values = [txt_contact_name, txt_contact_id, txt_contact_phone]
+array_location_keys = [lbl_newlocation,lbl_datefbeing]
+array_location_values = [txt_newlocation,txt_datefbeing]
 
 # summary
 summary = Frame(root)
@@ -266,14 +210,6 @@ lbl_sumofcontacts = Label(summary, text='Contacts summary:')
 lbl_sumofcontacts.grid(row=3,column=0)
 btn_quarantine = Button(summary, text='Send all to quarantine')
 btn_quarantine.grid(row=5,column=0)
-with open("user_locations.txt", "r") as locationfile:
-    locations_list = locationfile.read()
-lbl_locations_list = Label(summary, text=locations_list)
-lbl_locations_list.grid(row=2, column=0)
-with open("user_contacts.txt", "r") as file:
-    contactList = file.read()
-lbl_contacts_list = Label(summary, text=contactList)
-lbl_contacts_list.grid(row=4, column=0)
 
 setMenu(root)
 
