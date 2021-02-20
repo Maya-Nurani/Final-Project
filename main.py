@@ -52,8 +52,10 @@ def saveFormData(form_data, file_name, stat):
     if detailsValidation(form_data):
         try:
             with open("{0}.txt".format(file_name), "{0}".format(stat)) as file:
-                str_current_form_data = str(list(form_data.values()))
-                file.write(str_current_form_data + "\n")
+                for i in list(form_data.values()):
+                    str_current_data = str(i)
+                    file.write(str_current_data)
+                    file.write("\n")
         except:
             print("No founded file with this name:", file_name)
 
@@ -84,29 +86,37 @@ def sendCallBack():
 
 
 def updateContactsLocations():
+
     try:
         with open("users_locations.txt", "r") as locationfile:
             locations_list = locationfile.read()
-        for index, item in enumerate(array_location_keys, start= 1):
-            lbl_locations_labels = Label(summary, text=item.cget("text"))
-            lbl_locations_labels.grid(row=1, column=index)
-        lbl_locations_list = Label(summary, text=locations_list)
-        lbl_locations_list.grid(row=2, column=1)
-
+            if locations_list == '':
+                print("No contacts yet")
+                lbl_locations_print = Label(summary, text="No locations yet")
+                lbl_locations_print.grid(row=1, column=1)
+            else:
+                lbl_locations_print = Label(summary, text="Here is all your locations:")
+                lbl_locations_print.grid(row=1, column=1)
+                lbl_locations_from_file = Label(summary, text=locations_list)
+                lbl_locations_from_file.grid(row=2, column=1)
     except:
         print("File not found")
 
     try:
         with open("contactsFile.txt", "r") as file:
-            contactList = file.readlines()
-
-        for index, item in enumerate(array_contacts_keys, start= 1):
-            lbl_locations_labels = Label(summary, text=item.cget("text"))
-            lbl_locations_labels.grid(row=3, column=index)
-        lbl_contacts_list = Label(summary, text=contactList)
-        lbl_contacts_list.grid(row=4, column=0)
+            contactList = file.read()
+            if contactList == '':
+                print("No contacts yet")
+                lbl_locations_print = Label(summary, text="No contacts yet")
+                lbl_locations_print.grid(row=1, column=10)
+            else:
+                lbl_locations_print = Label(summary, text="Here is all your contacts:")
+                lbl_locations_print.grid(row=1, column=10)
+                lbl_locations_from_file = Label(summary, text=contactList)
+                lbl_locations_from_file.grid(row=2, column=10)
     except:
         print("File not found")
+
 
 
 initial_files("contactsFile")
@@ -116,6 +126,7 @@ initial_files("users_locations")
 root = Tk()
 root.minsize(600, 250)
 root.config(bg="lightgreen")
+root.title("Covistigation")
 s = Style()
 s.configure('TFrame', foreground='#000000', background='lightgreen')
 
@@ -245,13 +256,8 @@ array_location_values = [txt_newlocation, txt_datefbeing]
 # summary
 summary = Frame(root)
 btn_refresh = Button(summary, text="Refresh", command=lambda: updateContactsLocations())
-btn_refresh.grid(row=5, column=0)
-lbl_sumoflocations = Label(summary, text='Locations summary:')
-lbl_sumoflocations.grid(row=1, column=0)
-lbl_sumofcontacts = Label(summary, text='Contacts summary:')
-lbl_sumofcontacts.grid(row=3, column=0)
-btn_quarantine = Button(summary, text='Send all to quarantine')
-btn_quarantine.grid(row=5, column=1)
+btn_refresh.grid(row=0, column=0)
+
 
 setMenu(root)
 
