@@ -83,7 +83,7 @@ def saveContacts():
     #if True:
         print(objContacts().values())
         print(type(objContacts().values()))
-        with open("user_contacts.txt", "w") as file:
+        with open("user_contacts.txt", "a") as file:
             file.write(str(objContacts()))
         # confirmation popup - let the user know the details saved
         sendCallBack()
@@ -109,7 +109,7 @@ def saveLocations():
         #if True:
         print(objLocations().values())
         print(type(objLocations().values()))
-        with open("user_locations.txt", "w") as file:
+        with open("user_locations.txt", "a") as file:
             file.write(str(objLocations()))
         sendCallBack()
     else:
