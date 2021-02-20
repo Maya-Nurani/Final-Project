@@ -91,14 +91,13 @@ def updateContactsLocations():
         with open("users_locations.txt", "r") as locationfile:
             locations_list = locationfile.read()
             if locations_list == '':
-                print("No contacts yet")
                 lbl_locations_print = Label(summary, text="No locations yet")
-                lbl_locations_print.grid(row=1, column=1)
+                lbl_locations_print.grid(row=1, columnspan=5)
             else:
                 lbl_locations_print = Label(summary, text="Here is all your locations:")
-                lbl_locations_print.grid(row=1, column=1)
+                lbl_locations_print.grid(row=1, columnspan=5)
                 lbl_locations_from_file = Label(summary, text=locations_list)
-                lbl_locations_from_file.grid(row=2, column=1)
+                lbl_locations_from_file.grid(row=2, columnspan=5)
     except:
         print("File not found")
 
@@ -106,7 +105,6 @@ def updateContactsLocations():
         with open("contactsFile.txt", "r") as file:
             contactList = file.read()
             if contactList == '':
-                print("No contacts yet")
                 lbl_locations_print = Label(summary, text="No contacts yet")
                 lbl_locations_print.grid(row=1, column=10)
             else:
