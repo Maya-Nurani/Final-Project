@@ -37,7 +37,7 @@ def objData(arr_keys, arr_val):
 
 def saveFormData(form_data, file_name):
     if detailsValidation(form_data):
-        #TODO: check if needed to add try & except
+        # TODO: check if needed to add try & except
         with open("{0}.txt".format(file_name), "w") as file:
             file.write(str(form_data))
 
@@ -66,6 +66,14 @@ def clearForm():
 def sendCallBack(form_data):
     obj_values = list(form_data.values())
     messagebox.showinfo('confirmation', '{0}, your details saved successfully!'.format(obj_values[0]))
+
+
+def printDataOnScreen(file_name):
+    # TODO: print data from dictionary in a good way. we can use split or fo loop
+    with open("{0}.txt".format(file_name)) as file:
+        read_content = file.readlines()
+
+    return read_content
 
 
 # Root is our main window (where we create frames)
@@ -102,6 +110,13 @@ btn_add_contact = Button(contact, text='Add Contact',
                          command=lambda: saveFormData(objData(array_contacts_keys, array_contacts_values),
                                                       'contactsFile'))
 btn_add_contact.grid(row=4, column=0)
+
+lbl_print_data_title = Label(contact, font=("Arial Bold", 10),
+                         text="Here we will print contact details")
+lbl_print_data_title.grid(row=7, column=5)
+lbl_contact_data = Label(contact, font=("Arial Bold", 10),
+                         text=printDataOnScreen('contactsFile'))
+lbl_contact_data.grid(row=8, column=5)
 
 # locations - person's contact locations list
 locations = Frame(root)
