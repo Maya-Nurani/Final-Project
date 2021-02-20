@@ -84,6 +84,14 @@ def sendCallBack():
     user_name = txt_full_name.get()
     messagebox.showinfo('Confirmation', '{0}\nYour details saved successfully!'.format(user_name))
 
+def sendQuarantine():
+    with open("contactsFile.txt", "r") as file:
+        contactList = file.read()
+    if contactList == '':
+        messagebox.showinfo('Error', "There are no contacts")
+    else:
+        messagebox.showinfo('Quarantined', "Contacts got a quarantine message")
+
 
 def updateContactsLocations():
 
@@ -139,7 +147,7 @@ lbl_startinvestigation.grid(row=1, column=0)
 
 # contacts - person's contacts list
 contact = Frame(root)
-lbl_contacts_title = Label(contact, font=("Arial Bold", 10), text="contacts list")
+lbl_contacts_title = Label(contact, font=("Arial Bold", 12), text="Contacts list:\n Please enter all patient's contacts,\n in the last 10 days")
 lbl_contacts_title.grid(row=0, column=0)
 lbl_contact_name = Label(contact, font=("Arial Bold", 10), text="Contact's name:")
 lbl_contact_name.grid(row=1, column=0)
@@ -160,7 +168,7 @@ btn_add_contact.grid(row=4, column=0)
 
 # locations - person's contact locations list
 locations = Frame(root)
-lbl_locations_title = Label(locations, font=("Arial Bold", 10), text="contact locations list")
+lbl_locations_title = Label(locations, font=("Arial Bold", 12), text="Contact Locations list:\n Please enter patient's locations for the last 10 days")
 lbl_locations_title.grid(row=0, columnspan=20)
 lbl_newlocation = Label(locations, font=("Arial Bold", 10), text="Full address:")
 lbl_newlocation.grid(row=1, column=0)
@@ -180,8 +188,8 @@ personal_details = Frame(root)
 
 # creation
 main_title_PD = Label(personal_details,
-                      text='Personal Details:\n Please fill in the following details, according to the format',
-                      font=("Arial Bold", 10))
+                      text="Personal Details:\n Please fill in patient's details, according to the format",
+                      font=("Arial Bold", 12))
 main_title_PD.grid(row=0, columnspan=20)
 
 btn_send = Button(personal_details, text='Send',
@@ -253,8 +261,10 @@ array_location_values = [txt_newlocation, txt_datefbeing]
 
 # summary
 summary = Frame(root)
-btn_refresh = Button(summary, text="Refresh", command=lambda: updateContactsLocations())
+btn_refresh = Button(summary, text="Load contacts and locations", command=lambda: updateContactsLocations())
 btn_refresh.grid(row=0, column=0)
+btn_quarantine = Button(summary, text="Send everybody to quarantine", command=sendQuarantine)
+btn_quarantine.grid(row=0, column=1)
 
 
 setMenu(root)
