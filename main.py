@@ -10,7 +10,7 @@ import tkinter.filedialog as FD
 def raise_frame(frame_show, *frames_hide):
     for frame_to_hide in frames_hide:
         frame_to_hide.grid_forget()
-    frame_show.grid(padx=50,pady=50)
+    frame_show.grid(padx=50, pady=50)
     frame_show.tkraise()
 
 
@@ -36,15 +36,17 @@ def objData(arr_keys, arr_val):
     for x, y in zip(arr_keys, arr_val):
         obj[x.cget("text")] = y.get()
 
-    print(obj)
     return obj
 
 
 def saveFormData(form_data, file_name, stat):
     if detailsValidation(form_data):
-        # TODO: check if needed to add try & except
-        with open("{0}.txt".format(file_name), "{0}".format(stat)) as file:
-            file.write(str(form_data))
+        try:
+
+            with open("{0}.txt".format(file_name), "{0}".format(stat)) as file:
+                file.write(str(form_data))
+        except:
+            print("No founded file with this name:", file_name)
 
         # Confirmation popup - let the user know the details saved
         sendCallBack()
@@ -68,19 +70,26 @@ def clearForm():
 
 
 def sendCallBack():
-    user_name = txt_full_name.get() + ','
+    user_name = txt_full_name.get()
     messagebox.showinfo('Confirmation', '{0}\nYour details saved successfully!'.format(user_name))
 
 
 def updateContactsLocations():
-    with open("users_locations.txt", "r") as locationfile:
-        locations_list = locationfile.read()
-    lbl_locations_list = Label(summary, text=locations_list)
-    lbl_locations_list.grid(row=2, column=0)
-    with open("contactsFile.txt", "r") as file:
-        contactList = file.read()
-    lbl_contacts_list = Label(summary, text=contactList)
-    lbl_contacts_list.grid(row=4, column=0)
+    try:
+        with open("users_locations.txt", "r") as locationfile:
+            locations_list = locationfile.read()
+        lbl_locations_list = Label(summary, text=locations_list)
+        lbl_locations_list.grid(row=2, column=0)
+    except:
+        print("No founded file")
+
+    try:
+        with open("contactsFile.txt", "r") as file:
+            contactList = file.read()
+        lbl_contacts_list = Label(summary, text=contactList)
+        lbl_contacts_list.grid(row=4, column=0)
+    except:
+        print("No founded file")
 
 
 # Root is our main window (where we create frames)
@@ -215,14 +224,14 @@ array_location_values = [txt_newlocation, txt_datefbeing]
 
 # summary
 summary = Frame(root)
-btn_refresh = Button(summary, text="refresh", command=lambda: updateContactsLocations())
+btn_refresh = Button(summary, text="Refresh", command=lambda: updateContactsLocations())
 btn_refresh.grid(row=5, column=0)
 lbl_sumoflocations = Label(summary, text='Locations summary:')
 lbl_sumoflocations.grid(row=1, column=0)
 lbl_sumofcontacts = Label(summary, text='Contacts summary:')
 lbl_sumofcontacts.grid(row=3, column=0)
 btn_quarantine = Button(summary, text='Send all to quarantine')
-btn_quarantine.grid(row=5,column=1)
+btn_quarantine.grid(row=5, column=1)
 
 setMenu(root)
 
