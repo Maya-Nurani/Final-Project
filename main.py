@@ -94,7 +94,7 @@ def updateContactsLocations():
         lbl_locations_list.grid(row=2, column=1)
 
     except:
-        print("No founded file")
+        print("File not found")
 
     try:
         with open("contactsFile.txt", "r") as file:
@@ -106,7 +106,7 @@ def updateContactsLocations():
         lbl_contacts_list = Label(summary, text=contactList)
         lbl_contacts_list.grid(row=4, column=0)
     except:
-        print("No founded file")
+        print("File not found")
 
 
 initial_files("contactsFile")
