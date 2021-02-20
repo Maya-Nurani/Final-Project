@@ -124,6 +124,16 @@ def locationsValidation():
 def sendCallBack():
     messagebox.showinfo('confirmation', '{0}, your details saved successfully!'.format(txt_full_name.get()))
 
+def updateContactsLocations():
+    with open("user_locations.txt", "r") as locationfile:
+        locations_list = locationfile.read()
+    lbl_locations_list = Label(summary, text=locations_list)
+    lbl_locations_list.grid(row=2, column=0)
+    with open("user_contacts.txt", "r") as file:
+        contactList = file.read()
+    lbl_contacts_list = Label(summary, text=contactList)
+    lbl_contacts_list.grid(row=4, column=0)
+
 # Root is our main windoow (where we create frames)
 root = Tk()
 root.minsize(600, 300)
@@ -248,12 +258,22 @@ array_locations = [txt_newlocation, txt_datefbeing]
 
 # summary
 summary = Frame(root)
+btn_refresh = Button(summary, text="refresh", command= lambda: updateContactsLocations())
+btn_refresh.grid(row=0, column=0)
 lbl_sumoflocations = Label(summary, text='Locations summary:')
-lbl_sumoflocations.grid(row=0,column=0)
+lbl_sumoflocations.grid(row=1,column=0)
 lbl_sumofcontacts = Label(summary, text='Contacts summary:')
-lbl_sumofcontacts.grid(row=1,column=0)
+lbl_sumofcontacts.grid(row=3,column=0)
 btn_quarantine = Button(summary, text='Send all to quarantine')
-btn_quarantine.grid(row=4,column=0)
+btn_quarantine.grid(row=5,column=0)
+with open("user_locations.txt", "r") as locationfile:
+    locations_list = locationfile.read()
+lbl_locations_list = Label(summary, text=locations_list)
+lbl_locations_list.grid(row=2, column=0)
+with open("user_contacts.txt", "r") as file:
+    contactList = file.read()
+lbl_contacts_list = Label(summary, text=contactList)
+lbl_contacts_list.grid(row=4, column=0)
 
 setMenu(root)
 
