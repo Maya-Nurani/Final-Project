@@ -8,7 +8,7 @@ def initial_files(file_name):
         with open("{0}.txt".format(file_name), "w") as file:
             file.write("")
     except:
-        print("No founded file with this name:", file_name)
+        print("No founded file with this name: ", file_name)
 
 
 # menu controller - display frame and hide others
