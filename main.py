@@ -117,7 +117,6 @@ txt_newlocation.grid(row=1, column=1)
 btn_addcontact= Button(locations, text='Add Location')
 btn_addcontact.grid(row=1,column=2)
 
-
 # personal details
 personal_details = Frame(root)
 
