@@ -21,10 +21,11 @@ def clicked():
 # תפריט אשר עובד באמצעות הצגה והסתרה של frameים
 def setMenu(page):
     menubar = Menu(page)
-    menubar.add_command(label="Homepage", command=lambda: raise_frame(home_page, personal_details, contact,locations))
-    menubar.add_command(label="Personal details", command=lambda: raise_frame(personal_details, home_page, contact,locations))
-    menubar.add_command(label="Contacts", command=lambda: raise_frame(contact, home_page, personal_details,locations))
-    menubar.add_command(label="Contact locations", command= lambda: raise_frame(locations, contact, home_page, personal_details))
+    menubar.add_command(label="Homepage", command=lambda: raise_frame(home_page, personal_details, contact,locations,summary))
+    menubar.add_command(label="Personal details", command=lambda: raise_frame(personal_details, home_page, contact,locations,summary))
+    menubar.add_command(label="Add a contact", command=lambda: raise_frame(contact, home_page, personal_details,locations,summary))
+    menubar.add_command(label="Add contact locations", command= lambda: raise_frame(locations, contact, home_page, personal_details,summary))
+    menubar.add_command(label="Contacts and locations", command= lambda: raise_frame(summary,contact,home_page,personal_details,locations))
     menubar.add_command(label="Exit", command=root.quit)
     root.config(menu=menubar)
 
@@ -125,7 +126,7 @@ def sendCallBack():
 
 # Root is our main windoow (where we create frames)
 root = Tk()
-root.minsize(400, 200)
+root.minsize(600, 300)
 root.config(bg="lightgreen")
 s= Style()
 s.configure('TFrame',foreground='#000000',background='lightgreen')
@@ -240,10 +241,19 @@ lbl_gender.grid(row=6, column=0)
 rad_male.grid(row=6, column=8)
 rad_female.grid(row=6, column=10)
 
-# Array of values from personal details form
+# Array of values from the forms
 array_details = [txt_full_name, txt_age, combo_city, var_rad]
 array_contacts = [txt_nameofcontact, txt_idofcontact, txt_phoneofcontact]
 array_locations = [txt_newlocation, txt_datefbeing]
+
+# summary
+summary = Frame(root)
+lbl_sumoflocations = Label(summary, text='Locations summary:')
+lbl_sumoflocations.grid(row=0,column=0)
+lbl_sumofcontacts = Label(summary, text='Contacts summary:')
+lbl_sumofcontacts.grid(row=1,column=0)
+btn_quarantine = Button(summary, text='Send all to quarantine')
+btn_quarantine.grid(row=4,column=0)
 
 setMenu(root)
 
